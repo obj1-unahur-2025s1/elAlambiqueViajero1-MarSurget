@@ -1,5 +1,8 @@
 import elAlambiqueViajero.*
-test "luke cuenta cuando va de viaje"{
+import destinos.*
+test "luke cuenta cuando va de viaje" {
+    luke.reset()
+    luke.usarVehiculo(alambiqueVeloz)
     luke.viajar(paris)
     assert.equals(1, luke.cantidadViajes())
 }
@@ -8,19 +11,15 @@ test "luke viaja a paris"{
     luke.viajar(paris)
     assert.equals("Llavero Torre Eiffel", luke.recuerdo())
 }
-
-
 test "luke viaja a bs as"{
     luke.viajar(buenosAires)
     assert.equals("Mate", luke.recuerdo())
 }
-
 test "luke viaja a bagdad con un recuerdo diferente"{
     bagdad.recuerdo("Armas Masivas")
     luke.viajar(bagdad)
     assert.equals("Armas Masivas", luke.recuerdo())
 }
-
 test "luke viaja a bagdad"{
     bagdad.recuerdo("Armas Masivas")
     luke.viajar(bagdad)
@@ -36,8 +35,6 @@ test "luke viaja a las vegas cuando hace homenaje a paris"{
     luke.viajar(lasVegas)
     assert.equals("Llavero Torre Eiffel", luke.recuerdo())
 }
-
-
 test "luke viaja a paris y le qeuda combustibles para seguir viajando"{
     luke.viajar(paris)
     assert.that(alambiqueVeloz.tieneCombustible())
@@ -52,4 +49,27 @@ test "luke viaja 2 veces, quiere viajar a Paris y no puede"{
     luke.viajar(buenosAires)
     luke.viajar(paris)
     assert.notEquals("Llavero Torre Eiffel",luke.recuerdo())
+}
+
+test "superConvertible inicialmente no es rápido" {
+    assert.notThat(superConvertible.rapido())
+}
+test "superConvertible puede convertirse en un vehículo rápido" {
+    superConvertible.convertirEn(moto)
+    assert.that(superConvertible.rapido())
+}
+
+test "superConvertible tiene conbustible" {
+    superChatarraEspecial.cantidadCanones() = 1
+    superConvertible.convertirEn(superChatarraEspecial)
+    assert.that(superConvertible.tieneCombustible())
+}
+test "superConvertible no tiene conbustible" {
+    superChatarraEspecial.consumirCombustible()
+    superChatarraEspecial.consumirCombustible()
+    superChatarraEspecial.consumirCombustible()
+    superChatarraEspecial.consumirCombustible()
+    superChatarraEspecial.consumirCombustible()
+
+    assert.notThat(superConvertible.tieneCombustible())
 }

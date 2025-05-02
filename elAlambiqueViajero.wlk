@@ -1,17 +1,30 @@
+import destinos.*
+
 object luke{
     var cantidadViajes = 0
     var recuerdo = null
+    var vehiculoUsado = alambiqueVeloz
 
     method cantidadViajes() = cantidadViajes 
 
+    method usarVehiculo(vehiculo) {
+       vehiculoUsado = vehiculo
+    }
+
     method viajar(lugar){
-        if (lugar.puedeLlegar()) {
+        if (lugar.puedeLlegar(vehiculoUsado)) {
             cantidadViajes = cantidadViajes + 1
             recuerdo = lugar.recuerdoTipico()
-            alambiqueVeloz.consumirCombustible()
+            vehiculoUsado.consumirCombustible()
         }
     }
     method recuerdo() = recuerdo
+    method reset() {
+    cantidadViajes = 0
+    recuerdo = null
+    vehiculoUsado = alambiqueVeloz
+}
+
 }
 
 object alambiqueVeloz {
@@ -23,36 +36,6 @@ object alambiqueVeloz {
         combustible = combustible - consumoPorViaje
     }
     method rapido() = rapido
-}
-
-object paris{
-    method recuerdoTipico() = "Llavero Torre Eiffel"
-    method puedeLlegar() =  alambiqueVeloz.tieneCombustible() 
-}
-
-object buenosAires{
-    method recuerdoTipico() = "Mate"
-    method puedeLlegar() =  alambiqueVeloz.rapido() 
-}
-
-object bagdad {
-    var recuerdo = "bidon de petroleo"
-    method recuerdoTipico() = recuerdo
-    method recuerdo(nuevo) {recuerdo = nuevo }
-    method puedeLlegar() = true
-}
-
-object lasVegas{
-    var homenaje = paris
-    method homenaje(lugar) {homenaje = lugar}
-    method recuerdoTipico() = homenaje.recuerdoTipico()
-    method puedeLlegar() = homenaje.puedeLlegar()
-}
-
-
-object rio {
-  method recuerdoTipico() = "mono"
-  method puedeLlegar() =  moto.tieneRuedas() 
 }
 
 object moto {
@@ -100,4 +83,14 @@ object antiguallaBlindada {
      } 
     method tieneCombustible() = self.combustible() >= consumoPorViaje
 
+}
+
+object superConvertible {
+    var vehiculoAConvertir = superChatarraEspecial
+    method convertirEn(vehiculo) {
+        vehiculoAConvertir = vehiculo
+    }
+    method tieneCombustible() = vehiculoAConvertir.tieneCombustible()
+    method consumirCombustible() = vehiculoAConvertir.consumirCombustible()
+    method rapido() = vehiculoAConvertir.rapido()
 }
